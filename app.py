@@ -28,7 +28,12 @@ def calculate_sum_by_name(data):
     return sum_by_name
 
 def main():
+    st.set_page_config(
+    page_title="GAHK FEST APPEN",
+    page_icon="🥳",
+)
     st.title("GAHK FEST APPEN")
+    
 
     # Load data
     file_paths = ["131120231111SA.xlsx", "131120233469RL.xlsx"]
