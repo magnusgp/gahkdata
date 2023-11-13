@@ -88,6 +88,8 @@ def main():
     # st.subheader("Total brugt i baren: Alle")
     # st.write(sum_by_name)
 
+    sum_by_name = calculate_sum_by_name(data)
+
     # Plot bar chart with Plotly
     st.subheader("Bar Chart - Chart over Baren")
     fig = px.bar(sum_by_name, x='name', y='total_value', labels={'total_value': 'Total Value'})
