@@ -97,7 +97,7 @@ def main():
 
     # Plot bar chart with Plotly
     st.subheader("Bar Chart - Chart over Baren")
-    fig = px.bar(sum_by_name, x='name', y='total_value', labels={'total_value': 'Total Value'})
+    fig = px.bar(sum_by_name, x='Navn', y='Beløb', labels={'total_value': 'Total Value'})
     st.plotly_chart(fig)
 
 
