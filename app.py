@@ -55,17 +55,25 @@ def main():
         st.write(f"Antal gange i baren: {frequency} gange")
 
     # Display filtered data
-    st.subheader("Filtreret Data")
+    st.subheader("Dine ture i baren")
     st.write(filtered_data)
 
     # Display total sum by name
-    st.subheader("Total brugt i baren")
+    st.subheader("Total brugt i baren: Alle")
     st.write(sum_by_name)
 
     # Plot bar chart with Plotly
     st.subheader("Bar Chart - Chart over Baren")
     fig = px.bar(sum_by_name, x='name', y='total_value', labels={'total_value': 'Total Value'})
     st.plotly_chart(fig)
+
+    # Highest sum of values
+    highest_value = sum_by_name.loc[sum_by_name['total_value'].idxmax()]
+    st.markdown(f"🥇 **Big spender #1:** {highest_value['name']} with {highest_value['total_value']}")
+
+    # Highest frequency
+    highest_frequency = data['name'].value_counts().idxmax()
+    st.markdown(f"🥇 **Mest i baren:** {highest_frequency}")
 
     
 
