@@ -41,7 +41,7 @@ def main():
     # st.write(data)
 
     # Filtering by name
-    selected_name = st.text_input("Filtrer efter navn, husk at skrive hele dit navn:", "")
+    selected_name = st.text_input("What's the damage? Filtrer her, husk at skrive hele dit navn:", "")
     filtered_data = data[data['name'].str.contains(selected_name, case=False, na=False)]
 
     # Display summary statistics for the selected person
@@ -54,28 +54,46 @@ def main():
         st.write(f"Brugt i baren: {total_value} DKK")
         st.write(f"Antal gange i baren: {frequency} gange")
 
-    # Display filtered data
-    st.subheader("Dine ture i baren")
-    st.write(filtered_data)
+        # Display filtered data
+        st.subheader("Dine ture i baren")
+        st.write(filtered_data)
+
+        # Highest sum of values
+    st.subheader("Big spenders")
+    highest_value = sum_by_name.loc[sum_by_name['total_value'].idxmax()]
+    st.markdown(f"🥇 **Big spender #1:** {highest_value['name']} with {highest_value['total_value']}")
+    # Second highest sum of values, drop the row with the highest value
+    sum_by_name = sum_by_name.drop(sum_by_name['total_value'].idxmax())
+    highest_value = sum_by_name.loc[sum_by_name['total_value'].idxmax()]
+    st.markdown(f"🥈 **Big spender #2:** {highest_value['name']} with {highest_value['total_value']}")
+    # Third highest sum of values, drop the row with the highest value
+    sum_by_name = sum_by_name.drop(sum_by_name['total_value'].idxmax())
+    highest_value = sum_by_name.loc[sum_by_name['total_value'].idxmax()]
+    st.markdown(f"🥉 **Big spender #3:** {highest_value['name']} with {highest_value['total_value']}")
+
+    # Highest frequency
+    st.subheader("Mest i baren")
+    highest_frequency = data['name'].value_counts().idxmax()
+    st.markdown(f"🥇 **Mest i baren:** {highest_frequency}")
+    # Second highest frequency, drop the row with the highest frequency
+    data = data[data['name'] != highest_frequency]
+    highest_frequency = data['name'].value_counts().idxmax()
+    st.markdown(f"🥈 **Næstmest i baren:** {highest_frequency}")
+    # Third highest frequency, drop the row with the highest frequency
+    data = data[data['name'] != highest_frequency]
+    highest_frequency = data['name'].value_counts().idxmax()
+    st.markdown(f"🥉 **Tredjemest i baren:** {highest_frequency}")
 
     # Display total sum by name
-    st.subheader("Total brugt i baren: Alle")
-    st.write(sum_by_name)
+    # st.subheader("Total brugt i baren: Alle")
+    # st.write(sum_by_name)
 
     # Plot bar chart with Plotly
     st.subheader("Bar Chart - Chart over Baren")
     fig = px.bar(sum_by_name, x='name', y='total_value', labels={'total_value': 'Total Value'})
     st.plotly_chart(fig)
 
-    # Highest sum of values
-    highest_value = sum_by_name.loc[sum_by_name['total_value'].idxmax()]
-    st.markdown(f"🥇 **Big spender #1:** {highest_value['name']} with {highest_value['total_value']}")
 
-    # Highest frequency
-    highest_frequency = data['name'].value_counts().idxmax()
-    st.markdown(f"🥇 **Mest i baren:** {highest_frequency}")
-
-    
 
 if __name__ == "__main__":
     main()
